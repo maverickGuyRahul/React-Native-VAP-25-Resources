@@ -27,9 +27,19 @@ app.post('/users', async (req, res) => {
     const { name, email, bio, age } = req.body;
     const user = new User({ name, email, bio, age });
     await user.save();
+    console.log('User created successfully : ', user);
     res.status(201).json({ message: 'User Created Successfully', user });
   } catch (error) {
     res.status(400).json({ message: 'Error creating user', error });
+  }
+});
+
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res.status(400).json({ message: 'Error fetching users', error });
   }
 });
 
